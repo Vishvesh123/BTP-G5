@@ -45,21 +45,53 @@
     </form>
    </div>
     
-    {% if recommended_movies %}
-    <h2>Recommended Movies:</h2>
-    <div class="recommendations">
-        {% for movie_name, movie_poster in recommended_movies %}
-        <div class="recommendation">
-            <h3>{{ movie_name }}</h3>
-            <img src="{{ movie_poster }}" alt="{{ movie_name }} Poster">
-        </div>
     
-        {% endfor %}
-    </div>
-   
-    {% endif %}
+   {% if recommended_movie_details %}
+   <h2>Recommended Movies:</h2>
+   <div class="recommendations">
+       {% for movie_data in recommended_movie_details %}
+       <div class="recommendation">
+           <h3>{{ movie_data['title'] }}</h3>
+           <img src="{{ movie_data['poster'] }}" alt="{{ movie_data['title'] }} Poster">
+           <form method="post" name="rating-form">
+            <input type="hidden" name="movie_id" value="{{ movie_data['movie_id'] }}">
+            <input type="hidden" name="movie_title" value="{{ movie_data['title'] }}">
+            <input type="number" id="rating" name="rating" placeholder="Give Rating" min="1" max="5">
+            <button type="submit">Save Rating</button>
+          </form>
+       </div>
+       {% endfor %}
+   </div>
+   {% endif %}
 
-    
+
+
+
+   
+   
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+  $('form[name="rating-form"]').submit(function(event) {
+    event.preventDefault(); // Prevent the form from submitting normally
+
+    var formData = $(this).serialize(); // Serialize the form data
+
+    $.ajax({
+      type: 'POST',
+      url: '/rate', // Define a new route in your Flask app to handle the AJAX request
+      data: formData,
+      success: function(response) {
+        console.log('Rating saved successfully!');
+        // You can add any additional logic here if needed
+      },
+      error: function() {
+        console.log('An error occurred while saving the rating.');
+      }
+    });
+  });
+});
+</script>
 </body>
 </html>
 

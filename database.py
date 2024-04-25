@@ -50,7 +50,8 @@ class User(Base):
     username = Column(String)
     password = Column(String)
     search_history = relationship("SearchHistory", back_populates="user")
-
+    user_ratings = relationship("UserRating", back_populates="user")
+    
 class SearchHistory(Base):
     __tablename__ = 'search_history'
     id = Column(Integer, primary_key=True)
@@ -61,6 +62,20 @@ class SearchHistory(Base):
 
     def __repr__(self):
         return f"SearchHistory(user_id={self.user_id}, movie_id={self.movie_id}, movie_title='{self.movie_title}')"
+
+
+class UserRating(Base):
+    __tablename__ = 'user_ratings'
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('users.id'))
+    movie_id = Column(Integer)
+    movie_title = Column(String)
+    rating = Column(Integer)
+    user = relationship("User", back_populates="user_ratings")
+
+    def __repr__(self):
+        return f"UserRating(user_id={self.user_id}, movie_id={self.movie_id}, movie_title='{self.movie_title}', rating={self.rating})"
+
 
 def create_database():
     engine = create_engine('sqlite:///users.db', echo=True)

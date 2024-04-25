@@ -4,7 +4,7 @@ import pickle
 import pandas as pd
 import requests
 from sqlalchemy.orm import sessionmaker
-from database import User, SearchHistory, create_database, add_user, get_user
+from database import User, SearchHistory,UserRating, create_database, add_user, get_user
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
@@ -26,16 +26,48 @@ def fetch_poster(movie_id):
     full_path = "https://image.tmdb.org/t/p/w500/" + poster_path
     return full_path
 
-# Recommend movies
+# # Recommend movies
+# def recommend(movie):
+#     movie_index = movies[movies['title'] == movie].index[0]
+#     movie_list = sorted(list(enumerate(similarity[movie_index])), reverse=True, key=lambda x: x[1])[1:7]
+#     recommended_movies = []
+#     recommended_movie_posters = []
+#     for i in movie_list:
+#         movie_id = movies.iloc[i[0]].movie_id
+#         recommended_movie_posters.append(fetch_poster(movie_id))
+#         recommended_movies.append(movies.iloc[i[0]].title)
+
+#     # Save search history
+#     if 'user' in session:
+#         engine = create_database()
+#         Session = sessionmaker(bind=engine)
+#         db_session = Session()
+#         user = db_session.query(User).filter_by(username=session['user']).first()  
+#         search_history = SearchHistory(user_id=user.id, movie_id=int(movies.iloc[movie_index].movie_id), movie_title=movie)
+#         print(movies.iloc[movie_index])
+#         print("hellooooooooo")
+#         db_session.add(search_history)
+#         db_session.commit()
+#         db_session.close()
+
+        
+
+#     return recommended_movies, recommended_movie_posters
+
+
 def recommend(movie):
     movie_index = movies[movies['title'] == movie].index[0]
     movie_list = sorted(list(enumerate(similarity[movie_index])), reverse=True, key=lambda x: x[1])[1:7]
-    recommended_movies = []
-    recommended_movie_posters = []
+    recommended_movie_details = []
     for i in movie_list:
         movie_id = movies.iloc[i[0]].movie_id
-        recommended_movie_posters.append(fetch_poster(movie_id))
-        recommended_movies.append(movies.iloc[i[0]].title)
+        movie_title = movies.iloc[i[0]].title
+        movie_poster = fetch_poster(movie_id)
+        recommended_movie_details.append({
+            'movie_id': movie_id,
+            'title': movie_title,
+            'poster': movie_poster
+        })
 
     # Save search history
     if 'user' in session:
@@ -43,15 +75,12 @@ def recommend(movie):
         Session = sessionmaker(bind=engine)
         db_session = Session()
         user = db_session.query(User).filter_by(username=session['user']).first()  
-        search_history = SearchHistory(user_id=user.id, movie_id=movies.iloc[movie_index].movie_id, movie_title=movie)
-        print(movies.iloc[movie_index])
-        print("hellooooooooo")
+        search_history = SearchHistory(user_id=user.id, movie_id=int(movies.iloc[movie_index].movie_id), movie_title=movie)
         db_session.add(search_history)
         db_session.commit()
         db_session.close()
 
-    return recommended_movies, recommended_movie_posters
-
+    return recommended_movie_details
 
 
 # Login and registration routes
@@ -83,18 +112,29 @@ def register():
             return render_template('register.html', error=str(e))
     return render_template('register.html')
 
-# # Home route
-# @app.route('/', methods=['GET', 'POST'])
-# def home():
-#     if 'user' not in session:
-#         return redirect('/login')
-#     if request.method == 'POST':
-#         selected_movie_name = request.form['movie']
-#         recommended_movie_names, recommended_movie_posters = recommend(selected_movie_name)
-#         return render_template('index.html', movies=movies['title'].values, user=session['user'],
-#                                recommended_movies=zip(recommended_movie_names, recommended_movie_posters))
-#     return render_template('index.html', movies=movies['title'].values, user=session['user'])
 
+
+
+@app.route('/rate', methods=['POST'])
+def rate_movie():
+    if 'user' not in session:
+        return 'Not logged in', 401
+
+    movie_id = int(request.form.get('movie_id'))
+    movie_title = request.form.get('movie_title')
+    rating = int(request.form.get('rating'))
+
+    # Save user rating
+    engine = create_database()
+    Session = sessionmaker(bind=engine)
+    db_session = Session()
+    user = db_session.query(User).filter_by(username=session['user']).first()
+    user_rating = UserRating(user_id=user.id, movie_id=movie_id, movie_title=movie_title, rating=rating)
+    db_session.add(user_rating)
+    db_session.commit()
+    db_session.close()
+
+    return 'Rating saved successfully'
 
 
 
@@ -102,8 +142,7 @@ def register():
 def home():
     if 'user' not in session:
         return redirect('/login')
-    
-    # Query the search history for the current user
+
     engine = create_database()
     Session = sessionmaker(bind=engine)
     db_session = Session()
@@ -112,15 +151,30 @@ def home():
     db_session.close()
 
     if request.method == 'POST':
-        selected_movie_name = request.form['movie']
-        recommended_movie_names, recommended_movie_posters = recommend(selected_movie_name)
-        return render_template('index.html', movies=movies['title'].values, user=session['user'],
-                               recommended_movies=zip(recommended_movie_names, recommended_movie_posters),
-                               search_history=search_history)
+        if 'movie' in request.form:
+            selected_movie_name = request.form['movie']
+            recommended_movie_details = recommend(selected_movie_name)
+            return render_template('index.html', movies=movies['title'].values, user=session['user'],
+                                   recommended_movie_details=recommended_movie_details,
+                                   search_history=search_history)
+        elif 'rating' in request.form:
+            movie_id_str = request.form.get('movie_id')
+            if movie_id_str:
+                movie_id = int(movie_id_str)
+                movie_title = request.form['movie_title']
+                rating = int(request.form['rating'])
+
+                # Save user rating
+                engine = create_database()
+                Session = sessionmaker(bind=engine)
+                db_session = Session()
+                user = db_session.query(User).filter_by(username=session['user']).first()
+                user_rating = UserRating(user_id=user.id, movie_id=movie_id, movie_title=movie_title, rating=rating)
+                db_session.add(user_rating)
+                db_session.commit()
+                db_session.close()
+
     return render_template('index.html', movies=movies['title'].values, user=session['user'], search_history=search_history)
-
-
-
 
 
 if __name__ == '__main__':
