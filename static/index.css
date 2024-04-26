@@ -1,55 +1,110 @@
-/* Navbar Styles */
-nav {
+body {
+  margin: 0px;
+  font-family: "Roboto Mono", monospace;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.Main {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  background-color: #333;
-  color: #fff;
-  padding: 10px;
-}
+  width: 100%;
 
-nav h1 {
-  margin: 0;
+  height: 100vh;
 }
-
-nav .nav-links {
+h2 {
+  color: #fffab7;
+}
+.Main .Sidebar {
   display: flex;
-  align-items: center;
-}
-
-nav .nav-links a {
-  color: #fff;
-  text-decoration: none;
-  margin-left: 20px;
-}
-
-/* Search Bar Styles */
-.search-bar {
-  display: flex;
+  flex-direction: column;
   justify-content: center;
-  margin: 20px 0;
+  align-items: center;
+  background-color: #000;
+  color: #fff;
+  height: 100%;
+  width: 16%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.search-bar input[type="text"] {
-  padding: 10px;
-  width: 300px;
+.Main .Sidebar ul {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 90%;
+  width: 100%;
+}
+.Main .Sidebar ul li {
+  text-align: center;
+  height: 6%;
+  width: 100%;
+  border-bottom: 1px solid rgba(244, 239, 239);
+}
+.Main .Sidebar ul li a {
+  height: 20px;
+  font-size: 20px;
+}
+.Main .Sidebar ul li a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.Main .Recommend {
+  background-color: #ffffff;
+  width: 84%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0px;
+}
+.Main .Recommend .Header {
+  background-color: #003c43;
+  height: 50px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 /* Recommendation Styles */
-.recommendations {
-  width: 50%;
+.Recommendations {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.Recommendation {
+  width: 30%;
+  color: #000;
+  text-align: center;
+  align-items: center;
+}
+
+.Recommendation img {
+  max-width: 45%;
+  height: auto;
+}
+
+.Recommendation1 {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
 }
-
-.recommendation {
-  width: 30%;
-  margin: 10px;
-  text-align: center;
-}
-
-.recommendation img {
-  max-width: 50%;
+.Recommendation1 img {
+  width: 100%;
+  max-width: 37%;
   height: auto;
+}
+.Recommendation1 .Image {
+  width: 32%;
 }

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Search History</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='history.css') }}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital@0;1&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div class="Main">
+        <nav class="Sidebar">
+            <ul>
+               
+                    <h2>Welcome, {{ user }}!</h2>
+               <li> <a href="{{ url_for('home') }}" class="register-btn">Home</a></li>
+                <li>
+                    <a href="{{ url_for('search') }}" class="search-btn">Search</a>
+                </li>
+               
+
+                <li>
+                    <a href="{{ url_for('login') }}" class="register-btn">Login</a>
+                </li>
+                <li>
+                    <a href="{{ url_for('register') }}" class="register-btn">Register</a>
+                </li>
+            </ul>
+        </nav>
+    <div class="search-history">
+        <div class="Header">
+            <h1>Movie Recommender System</h1>
+          </div>
+       
+        {% if search_history %}
+          <ul>
+            {% for history in search_history %}
+              <li>{{ history.movie_title }}</li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p>No search history found.</p>
+        {% endif %}
+    </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Movie Recommender</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='search.css') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital@0;1&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div class="Main">
+    <nav class="Sidebar">
+      <ul>
+
+        <h2>Welcome, {{ user }}!</h2>
+        <li> <a href="{{ url_for('home') }}" class="register-btn">Home</a></li>
+
+        <li>
+          <a href="{{ url_for('history') }}" class="history-btn">History</a>
+        </li>
+
+        <li>
+          <a href="{{ url_for('login') }}" class="register-btn">Login</a>
+        </li>
+        <li>
+          <a href="{{ url_for('register') }}" class="register-btn">Register</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="Search">
+      <div class="Header">
+        <h1>Movie Recommender System</h1>
+      </div>
+      <div class="search-bar">
+        <form method="post">
+          <label for="movie">Select a movie:</label>
+          <select id="movie" name="movie">
+            {% for movie in movies %}
+            <option value="{{ movie }}">{{ movie }}</option>
+            {% endfor %}
+          </select>
+          <br>
+          <button type="submit">Search</button>
+        </form>
+      </div>
+      <div class="Recommend">
+        {% if recommended_movie_details %}
+        <div class="Recommendations">
+
+
+         
+
+          {% for movie_data in recommended_movie_details %}
+          <div class="Recommendation">
+            <h3>{{ movie_data['title'] }}</h3>
+            <img src="{{ movie_data['poster'] }}" alt="{{ movie_data['title'] }} Poster">
+            <form method="post" name="rating-form">
+              <input type="hidden" name="movie_id" value="{{ movie_data['movie_id'] }}">
+              <input type="hidden" name="movie_title" value="{{ movie_data['title'] }}">
+              <input type="number" id="rating" name="rating" placeholder="Give Rating" min="1" max="5">
+              <button type="submit">Save Rating</button>
+            </form>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+
+
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $('form[name="rating-form"]').submit(function (event) {
+        event.preventDefault(); // Prevent the form from submitting normally
+
+        var formData = $(this).serialize(); // Serialize the form data
+
+        $.ajax({
+          type: 'POST',
+          url: '/rate', // Define a new route in your Flask app to handle the AJAX request
+          data: formData,
+          success: function (response) {
+            console.log('Rating saved successfully!');
+            // You can add any additional logic here if needed
+          },
+          error: function () {
+            console.log('An error occurred while saving the rating.');
+          }
+        });
+      });
+    });
+  </script>
+
+
+</body>
+
+</html>

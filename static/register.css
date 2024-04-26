@@ -7,6 +7,10 @@ body {
   align-items: center;
   height: 100vh;
   margin: 0;
+  font-family: "Roboto Mono", monospace;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
 }
 
 .container {
@@ -21,7 +25,7 @@ body {
 }
 
 .container form {
-  margin-top: 0px;
+  margin-top: -10px;
 }
 input[id="fullname"],
 input[type="text"],

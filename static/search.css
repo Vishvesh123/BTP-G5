@@ -1,0 +1,166 @@
+body {
+  margin: 0px;
+  font-family: "Roboto Mono", monospace;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.Main {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  height: 100vh;
+}
+h2 {
+  color: #fffab7;
+}
+.Main .Sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #000;
+  color: #fff;
+  height: 100%;
+  width: 16%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.Main .Sidebar ul {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 90%;
+  width: 100%;
+}
+.Main .Sidebar ul li {
+  text-align: center;
+  height: 6%;
+  width: 100%;
+  border-bottom: 1px solid rgba(244, 239, 239);
+}
+.Main .Sidebar ul li a {
+  height: 20px;
+  font-size: 20px;
+}
+.Main .Sidebar ul li a {
+  text-decoration: none;
+  color: #fff;
+}
+.Main .Search {
+  background-color: #ffffff;
+  width: 84%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0px;
+  height: 100%;
+}
+.Main .Search .Header {
+  background-color: #003c43;
+  height: 50px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.search-bar {
+  width: 500px; /* Adjust the width as needed */
+  height: 140px;
+  padding: 10px;
+  background-color: #003c43;
+  color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.search-bar select {
+  width: 100%;
+  height: 30px; /* Set the height of the search bar */
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 14px;
+}
+
+.search-bar button {
+  position: relative;
+  left: 0;
+  bottom: -45px; /* Position the button 20px below the search bar */
+  padding: 8px 16px;
+  background-color: #ffffff;
+  border: 2px solid #4caf50;
+  color: #4caf50;
+  font-weight: bolder;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.search-bar button:hover {
+  background-color: #45a049;
+  color: #ffffff;
+}
+
+.search-bar label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.Recommend {
+  background-color: #ffffff;
+  width: 84%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0px;
+}
+
+.Recommendations {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.Recommendation {
+  width: 30%;
+  color: #000;
+  text-align: center;
+  align-items: center;
+}
+.Recommendation form input[id="rating"] {
+  background-color: #b7d6ec;
+  color: #000;
+  width: 80px;
+}
+.Recommendation form input[id="rating"]::placeholder {
+  color: #000;
+  font-size: smaller;
+}
+.Recommendation form button {
+  background-color: #4caf50;
+  cursor: pointer;
+  color: #fff;
+}
+
+.Recommendation img {
+  max-width: 35%;
+  height: auto;
+}

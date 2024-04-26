@@ -1,0 +1,103 @@
+body {
+  margin: 0px;
+  font-family: "Roboto Mono", monospace;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.Main {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  height: 100vh;
+}
+h2 {
+  color: #fffab7;
+}
+.Main .Sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #000;
+  color: #fff;
+  height: 100%;
+  width: 16%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.Main .Sidebar ul {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 90%;
+  width: 100%;
+}
+.Main .Sidebar ul li {
+  text-align: center;
+  height: 6%;
+  width: 100%;
+  border-bottom: 1px solid rgba(244, 239, 239);
+}
+.Main .Sidebar ul li a {
+  height: 20px;
+  font-size: 20px;
+}
+.Main .Sidebar ul li a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.Main .Header {
+  background-color: #003c43;
+  height: 50px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.Main .search-history {
+  background-color: #ffffff;
+  width: 84%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0px;
+}
+.Main .Header {
+  background-color: #003c43;
+  height: 50px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+/* Recommendation Styles */
+.Main .search-history ul {
+  position: relative;
+  bottom: 200px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  width: 40%;
+  color: #fff;
+  display: flex;
+  background-color: #003c43;
+  flex-direction: column;
+  max-height: 60%; /* adjust this value as needed */
+  overflow-y: auto;
+  align-items: center;
+  justify-content: space-between;
+}
+.Main .search-history ul li {
+  margin-top: 10px;
+}
